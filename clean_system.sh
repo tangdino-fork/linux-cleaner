@@ -16,16 +16,6 @@ if [ "$(id -u)" -ne 0 ]; then
     echo -e "${RED}错误：此脚本需要root权限！${NC}"
     exit 1
 fi
-
-# 安全提示
-echo -e "${YELLOW}警告：此脚本将删除系统文件，请谨慎操作！${NC}"
-read -p "是否继续？(y/n) " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-    echo -e "${GREEN}操作已取消。${NC}"
-    exit 0
-fi
-
 # 1. 清理日志文件（保留最近7天）
 echo -e "${GREEN}[1/5] 正在清理旧日志...${NC}"
 find /var/log -type f -name "*.log" -mtime +7 -delete
