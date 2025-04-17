@@ -64,10 +64,12 @@ find /home -type f -name "*.tmp" -delete
 find /home -type f -name "*.cache" -delete
 echo -e "   ${GREEN}✓ 用户缓存清理完成${NC}"
 
+# 7. 全面清理 Docker 未使用的资源（容器、镜像、网络、缓存等）
+if command -v docker &>/dev/null; then
+    echo -e "${GREEN}[6/6] 正在全面清理 Docker 垃圾...${NC}"
+    docker system prune -af 2>/dev/null
+    echo -e "   ${GREEN}✓ Docker 系统清理完成${NC}"
+fi
+
 # 显示清理结果
 echo -e "\n${GREEN}✅ 系统清理完成！${NC}"
-echo -e "可运行 ${YELLOW}df -h${NC} 查看磁盘空间变化\n"
-
-# 可选：显示清理前后的磁盘空间对比
-echo -e "${YELLOW}磁盘空间变化：${NC}"
-df -h / | awk 'NR==1{print} NR==2{print}'
